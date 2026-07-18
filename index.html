@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parças Motos — Loja & Oficina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#0b0b0c;
+    --asphalt-2:#161618;
+    --asphalt-3:#1f2023;
+    --red:#e4171f;
+    --red-dark:#a30f14;
+    --chalk:#f3f1ec;
+    --yellow:#ffc93c;
+    --steel:#43454b;
+    --steel-line:#2b2c2f;
+    --display: 'Anton', sans-serif;
+    --body: 'Rajdhani', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--asphalt);
+    color:var(--chalk);
+    font-family:var(--body);
+    font-weight:500;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--red);color:var(--chalk);}
+  :focus-visible{outline:3px solid var(--yellow);outline-offset:2px;}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
+  h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.5px;text-transform:uppercase;line-height:1.02;}
+  .eyebrow{
+    font-family:var(--body);font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+    font-size:12.5px;color:var(--red);display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:'';width:22px;height:2px;background:var(--red);display:inline-block;}
+
+  /* ---------- tread divider (signature motif) ---------- */
+  .tread{width:100%;height:14px;display:block;}
+  .tread path{fill:var(--steel-line);}
+  .tread.on-red path{fill:var(--red-dark);}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(11,11,12,.82);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--steel-line);
+  }
+  .navbar{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1280px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{
+    width:42px;height:42px;border-radius:50%;background:var(--red);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-size:20px;color:var(--asphalt);
+    box-shadow:0 0 0 2px var(--asphalt), 0 0 0 3px var(--red);
+  }
+  .brand-name{font-family:var(--display);font-size:19px;letter-spacing:.5px;}
+  .brand-name span{color:var(--red);}
+  nav ul{list-style:none;display:flex;gap:34px;}
+  nav a{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#cfcfd1;transition:color .2s;}
+  nav a:hover{color:var(--yellow);}
+  .nav-cta{
+    background:var(--red);color:var(--chalk);padding:11px 22px;border-radius:3px;
+    font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.05em;
+    display:flex;align-items:center;gap:8px;transition:transform .15s, background .2s;
+    border:1px solid var(--red);
+  }
+  .nav-cta:hover{background:transparent;transform:translateY(-1px);}
+  .burger{display:none;background:none;border:none;color:var(--chalk);font-size:26px;cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+    padding-top:110px;overflow:hidden;
+  }
+  .hero-split{
+    position:absolute;inset:0;display:flex;z-index:0;
+  }
+  .split-loja, .split-oficina{
+    flex:1;position:relative;transition:flex-basis .4s ease;
+  }
+  .split-loja{
+    background:
+      radial-gradient(120% 140% at 20% 20%, rgba(228,23,31,.35), transparent 60%),
+      linear-gradient(160deg, #240709 0%, var(--asphalt) 65%);
+  }
+  .split-oficina{
+    background:
+      radial-gradient(120% 140% at 80% 30%, rgba(255,255,255,.06), transparent 55%),
+      linear-gradient(200deg, #1c1d20 0%, var(--asphalt) 65%);
+  }
+  .hero-split::after{
+    content:'';position:absolute;left:50%;top:0;bottom:0;width:6px;
+    background:repeating-linear-gradient(180deg, var(--yellow) 0 22px, var(--asphalt) 22px 44px);
+    transform:translateX(-50%) skewX(-8deg);z-index:1;
+  }
+  .hero-tag{
+    position:absolute;top:130px;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
+    z-index:2;
+  }
+  .hero-tag.loja{left:6%;color:var(--red);}
+  .hero-tag.oficina{right:6%;color:#a9abb0;}
+  .hero-inner{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:0 32px 80px;width:100%;}
+  .hero-title{
+    font-size:clamp(48px, 8.6vw, 128px);
+    text-align:center;
+    text-shadow:0 6px 30px rgba(0,0,0,.6);
+  }
+  .hero-title .accent{color:var(--red);}
+  .hero-sub{
+    text-align:center;max-width:640px;margin:22px auto 0;font-size:19px;color:#c9c9cd;font-weight:500;
+  }
+  .hero-actions{display:flex;justify-content:center;gap:16px;margin-top:38px;flex-wrap:wrap;}
+  .btn{
+    padding:16px 30px;border-radius:3px;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.06em;
+    display:inline-flex;align-items:center;gap:10px;transition:all .18s ease;cursor:pointer;border:1px solid transparent;
+  }
+  .btn-primary{background:var(--red);color:var(--chalk);}
+  .btn-primary:hover{background:var(--red-dark);transform:translateY(-2px);}
+  .btn-outline{border-color:#5a5b60;color:var(--chalk);}
+  .btn-outline:hover{border-color:var(--chalk);background:rgba(255,255,255,.05);}
+  .hero-proof{
+    display:flex;justify-content:center;gap:44px;margin-top:56px;flex-wrap:wrap;
+  }
+  .proof-item{text-align:center;}
+  .proof-num{font-family:var(--display);font-size:30px;color:var(--yellow);}
+  .proof-label{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#9c9ca0;}
+
+  /* ---------- MARKETPLACE STRIP ---------- */
+  .mkt-strip{
+    background:var(--asphalt-2);border-top:1px solid var(--steel-line);border-bottom:1px solid var(--steel-line);
+    padding:22px 0;overflow:hidden;position:relative;
+  }
+  .mkt-track{display:flex;gap:64px;width:max-content;animation:scroll 26s linear infinite;align-items:center;}
+  .mkt-track span{
+    font-family:var(--display);font-size:22px;color:#6c6d72;letter-spacing:1px;white-space:nowrap;
+  }
+  .mkt-track span b{color:var(--chalk);}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- SECTION generic ---------- */
+  section{padding:110px 0;position:relative;}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;gap:24px;flex-wrap:wrap;}
+  .sec-title{font-size:clamp(32px,4.4vw,54px);}
+  .sec-desc{max-width:420px;color:#a7a7ab;font-size:15.5px;}
+
+  /* ---------- CATEGORIAS ---------- */
+  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--steel-line);border:1px solid var(--steel-line);}
+  .cat-card{
+    background:var(--asphalt-2);padding:38px 26px;position:relative;overflow:hidden;
+    transition:background .25s ease;cursor:default;
+  }
+  .cat-card:hover{background:var(--asphalt-3);}
+  .cat-icon{width:44px;height:44px;margin-bottom:22px;color:var(--red);}
+  .cat-name{font-family:var(--display);font-size:18px;letter-spacing:.3px;margin-bottom:8px;}
+  .cat-count{font-size:13px;color:#8c8c90;font-weight:600;}
+  .cat-card::after{
+    content:'';position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--red);transition:width .25s ease;
+  }
+  .cat-card:hover::after{width:100%;}
+
+  /* ---------- PRODUTOS ---------- */
+  .prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .prod-card{
+    display:block;background:var(--asphalt-2);border:1px solid var(--steel-line);border-radius:6px;overflow:hidden;
+    transition:transform .22s ease, border-color .22s ease;cursor:pointer;
+  }
+  .prod-card:hover{transform:translateY(-6px);border-color:var(--red);}
+  .prod-media{
+    height:180px;position:relative;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg, var(--asphalt-3), #0e0e10);
+  }
+  .prod-media svg{width:64px;height:64px;color:#54555a;}
+  .prod-tag{
+    position:absolute;top:12px;left:12px;background:var(--yellow);color:var(--asphalt);
+    font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 9px;border-radius:2px;
+  }
+  .prod-body{padding:18px 18px 22px;}
+  .prod-cat{font-size:11.5px;color:#8c8c90;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:6px;}
+  .prod-name{font-size:17px;font-weight:600;margin-bottom:10px;line-height:1.25;}
+  .prod-price-row{display:flex;justify-content:space-between;align-items:center;}
+  .prod-price-from{font-size:11px;color:#8c8c90;display:block;}
+  .prod-price{font-family:var(--display);font-size:22px;color:var(--chalk);}
+  .prod-price small{font-size:13px;color:var(--yellow);font-family:var(--body);font-weight:700;}
+  .prod-cart{
+    width:38px;height:38px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;
+    color:var(--chalk);transition:background .2s;
+  }
+  .prod-card:hover .prod-cart{background:var(--yellow);color:var(--asphalt);}
+
+  /* ---------- OFICINA ---------- */
+  .oficina-sec{background:var(--asphalt-2);}
+  .oficina-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:start;}
+  .steps{display:flex;flex-direction:column;gap:0;margin-top:30px;}
+  .step{display:flex;gap:24px;padding:26px 0;border-top:1px solid var(--steel-line);}
+  .step:last-child{border-bottom:1px solid var(--steel-line);}
+  .step-num{font-family:var(--display);font-size:34px;color:var(--red);min-width:56px;}
+  .step-title{font-size:18px;font-weight:700;margin-bottom:6px;text-transform:uppercase;}
+  .step-desc{font-size:14.5px;color:#a7a7ab;}
+  .service-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .service-chip{
+    background:var(--asphalt-3);border:1px solid var(--steel-line);border-radius:4px;padding:16px 18px;
+    font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:10px;
+  }
+  .service-chip svg{width:18px;height:18px;color:var(--red);flex-shrink:0;}
+
+  /* ---------- STATS ---------- */
+  .stats-band{
+    background:var(--red);color:var(--asphalt);padding:60px 0;position:relative;
+  }
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;}
+  .stat-num{font-family:var(--display);font-size:clamp(34px,4.6vw,56px);}
+  .stat-label{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+
+  /* ---------- DEPOIMENTO / INSTAGRAM ---------- */
+  .social-sec .sec-head{margin-bottom:40px;}
+  .ig-card{
+    background:var(--asphalt-2);border:1px solid var(--steel-line);border-radius:8px;padding:34px;
+    display:flex;gap:26px;align-items:center;flex-wrap:wrap;
+  }
+  .ig-avatar{
+    width:76px;height:76px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-size:26px;flex-shrink:0;
+  }
+  .ig-name{font-weight:700;font-size:17px;}
+  .ig-handle{color:#8c8c90;font-size:14px;margin-bottom:8px;}
+  .ig-stats{display:flex;gap:22px;font-size:14px;color:#c9c9cd;}
+  .ig-stats b{color:var(--chalk);}
+  .ig-cta{margin-left:auto;}
+
+  /* ---------- LOCALIZAÇÃO ---------- */
+  .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .loc-list{display:flex;flex-direction:column;gap:24px;margin-top:26px;}
+  .loc-item{display:flex;gap:16px;}
+  .loc-item svg{width:22px;height:22px;color:var(--red);flex-shrink:0;margin-top:2px;}
+  .loc-item b{display:block;font-size:15.5px;margin-bottom:3px;}
+  .loc-item span{font-size:14.5px;color:#a7a7ab;}
+  .map-wrap{
+    display:block;height:360px;border-radius:8px;border:1px solid var(--steel-line);
+    position:relative;overflow:hidden;cursor:pointer;
+  }
+  .map-wrap iframe{
+    position:absolute;inset:0;width:100%;height:100%;border:0;
+    filter:grayscale(.25) contrast(1.05);
+    pointer-events:none; /* o mapa é só visual, o clique é tratado pelo link por cima */
+  }
+  .map-overlay{
+    position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:22px;
+    background:linear-gradient(180deg, transparent 55%, rgba(11,11,12,.75) 100%);
+  }
+  .map-open-btn{
+    background:var(--red);color:var(--chalk);padding:13px 24px;border-radius:3px;
+    font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.05em;
+    display:flex;align-items:center;gap:9px;transition:background .2s, transform .18s;
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
+  }
+  .map-wrap:hover .map-open-btn{background:var(--red-dark);transform:translateY(-2px);}
+
+  /* ---------- CTA FINAL ---------- */
+  .final-cta{
+    text-align:center;padding:120px 0;
+    background:radial-gradient(60% 100% at 50% 0%, rgba(228,23,31,.18), transparent 70%);
+  }
+  .final-cta h2{font-size:clamp(34px,6vw,72px);max-width:820px;margin:0 auto 22px;}
+  .final-cta p{color:#a7a7ab;font-size:17px;max-width:480px;margin:0 auto 40px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--asphalt-2);border-top:1px solid var(--steel-line);padding:60px 0 30px;}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px;}
+  .foot-brand p{color:#8c8c90;font-size:14px;margin-top:14px;max-width:280px;}
+  .foot-col h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--chalk);margin-bottom:16px;}
+  .foot-col a{display:block;color:#a7a7ab;font-size:14.5px;margin-bottom:11px;transition:color .2s;}
+  .foot-col a:hover{color:var(--red);}
+  .foot-bottom{
+    border-top:1px solid var(--steel-line);padding-top:24px;display:flex;justify-content:space-between;
+    font-size:13px;color:#6c6d72;flex-wrap:wrap;gap:10px;
+  }
+
+  /* ---------- WHATSAPP FLOAT ---------- */
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;z-index:90;
+    background:#25D366;width:60px;height:60px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .2s;
+  }
+  .wa-float:hover{transform:scale(1.08);}
+  .wa-float svg{width:28px;height:28px;color:#fff;}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{transition:none;opacity:1;transform:none;}
+    .mkt-track{animation:none;}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1000px){
+    nav ul{display:none;}
+    .burger{display:block;}
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+    .prod-grid{grid-template-columns:repeat(2,1fr);}
+    .oficina-grid, .loc-grid{grid-template-columns:1fr;gap:40px;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:30px;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .hero-tag{display:none;}
+  }
+  @media (max-width:560px){
+    .cat-grid, .prod-grid{grid-template-columns:1fr 1fr;}
+    .service-list{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;}
+    .wrap{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="brand">
+      <div class="brand-mark">P</div>
+      <div class="brand-name">PARÇAS<span>MOTOS</span></div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#categorias">Loja</a></li>
+        <li><a href="#oficina">Oficina</a></li>
+        <li><a href="#produtos">Produtos</a></li>
+        <li><a href="#localizacao">Endereço</a></li>
+      </ul>
+    </nav>
+    <a class="nav-cta" href="https://wa.me/5511947943074" target="_blank" rel="noopener">Falar no WhatsApp</a>
+    <button class="burger" aria-label="Abrir menu">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-split" id="heroSplit">
+    <div class="split-loja"></div>
+    <div class="split-oficina"></div>
+  </div>
+  <span class="hero-tag loja">Loja &amp; Acessórios</span>
+  <span class="hero-tag oficina">Oficina &amp; Serviço</span>
+  <div class="hero-inner">
+    <h1 class="hero-title">RODA COM QUEM<br><span class="accent">ENTENDE</span> DE MOTO</h1>
+    <p class="hero-sub">Capacete, jaqueta, óleo, acessórios e peça — e quando a moto precisa de mecânico de verdade, a gente também resolve. Tudo no mesmo endereço, em Taboão da Serra.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#produtos">Ver a loja</a>
+      <a class="btn btn-outline" href="#oficina">Agendar na oficina</a>
+    </div>
+    <div class="hero-proof reveal">
+      <div class="proof-item"><div class="proof-num">2.9K+</div><div class="proof-label">Seguidores</div></div>
+      <div class="proof-item"><div class="proof-num">300+</div><div class="proof-label">Itens em estoque</div></div>
+      <div class="proof-item"><div class="proof-num">4</div><div class="proof-label">Marketplaces</div></div>
+      <div class="proof-item"><div class="proof-num">7</div><div class="proof-label">Dias por semana</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="mkt-strip">
+  <div class="mkt-track" id="mktTrack">
+    <span>Também vendemos no <b>Mercado Livre</b></span>
+    <span><b>Shopee</b></span>
+    <span><b>TikTok Shop</b></span>
+    <span><b>Amazon</b></span>
+    <span>Também vendemos no <b>Mercado Livre</b></span>
+    <span><b>Shopee</b></span>
+    <span><b>TikTok Shop</b></span>
+    <span><b>Amazon</b></span>
+  </div>
+</div>
+
+<svg class="tread" viewBox="0 0 400 14" preserveAspectRatio="none"><path d="M0 0 L14 14 L28 0 L42 14 L56 0 L70 14 L84 0 L98 14 L112 0 L126 14 L140 0 L154 14 L168 0 L182 14 L196 0 L210 14 L224 0 L238 14 L252 0 L266 14 L280 0 L294 14 L308 0 L322 14 L336 0 L350 14 L364 0 L378 14 L392 0 L400 6 L400 14 L0 14 Z"/></svg>
+
+<section id="categorias">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">Catálogo da loja</div>
+        <h2 class="sec-title">O que vende<br>nos Parças</h2>
+      </div>
+      <p class="sec-desc">Do capacete ao suporte de celular — categorias organizadas do jeito que o cliente encontra rápido, no site e em todos os marketplaces.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card reveal">
+        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13a8 8 0 0 1 16 0v3a2 2 0 0 1-2 2h-2v-4h-8v4H6a2 2 0 0 1-2-2z"/></svg>
+        <div class="cat-name">Capacetes</div>
+        <div class="cat-count">LS2 · Norisk · Peels</div>
+      </div>
+      <div class="cat-card reveal">
+        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h18M3 12a9 9 0 0 1 9-9m-9 9a9 9 0 0 0 9 9m0-18a9 9 0 0 1 9 9m-9-9c2 2 3 5 3 9s-1 7-3 9m0-18c-2 2-3 5-3 9s1 7 3 9m9-9a9 9 0 0 1-9 9"/></svg>
+        <div class="cat-name">Viseiras</div>
+        <div class="cat-count">Fumê · Espelhada · Cristal</div>
+      </div>
+      <div class="cat-card reveal">
+        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3h8l1 4H7l1-4zM7 7h10l1 12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L7 7z"/></svg>
+        <div class="cat-name">Óleo &amp; Fluidos</div>
+        <div class="cat-count">Mineral · Semi · Sintético</div>
+      </div>
+      <div class="cat-card reveal">
+        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 18h6"/></svg>
+        <div class="cat-name">Suporte de Celular</div>
+        <div class="cat-count">Universal · À prova d'água</div>
+      </div>
+      <div class="cat-card reveal">
+        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8l4-4h8l4 4-3 3v9H7v-9z"/></svg>
+        <div class="cat-name">Jaquetas</div>
+        <div class="cat-count">Impermeável · Couro · Textil</div>
+      </div>
+      <div class="cat-card reveal">
+        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="cat-name">Pneus &amp; Câmaras</div>
+        <div class="cat-count">Pirelli · Rinaldi · Levorin</div>
+      </div>
+      <div class="cat-card reveal">
+        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <div class="cat-name">Equip. de Proteção</div>
+        <div class="cat-count">Cotoveleira · Joelheira · Colete</div>
+      </div>
+      <div class="cat-card reveal">
+        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a1 1 0 0 0 1.4 0l1.6-1.6a1 1 0 0 0 0-1.4l-1.6-1.6a1 1 0 0 0-1.4 0L13.1 3.3a1 1 0 0 0 0 1.4zM2 22l7.5-7.5M9 13l3.5-3.5M14 8l3.5-3.5"/></svg>
+        <div class="cat-name">Peças &amp; Manutenção</div>
+        <div class="cat-count">Filtro · Vela · Relação</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="produtos" style="background:var(--asphalt-2);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">Mais vendidos</div>
+        <h2 class="sec-title">Produtos em<br>destaque</h2>
+      </div>
+      <a class="btn btn-outline" href="#">Ver catálogo completo</a>
+    </div>
+    <div class="prod-grid">
+      <a class="prod-card reveal" href="https://wa.me/5511947943074?text=Ol%C3%A1!%20Tenho%20interesse%20no%20capacete%20LS2%20Rapid%20Fast%20Fibra%20(R%24%20389).%20Ainda%20tem%20em%20estoque%3F" target="_blank" rel="noopener">
+        <div class="prod-media"><span class="prod-tag">Oferta</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 13a8 8 0 0 1 16 0v3a2 2 0 0 1-2 2h-2v-4h-8v4H6a2 2 0 0 1-2-2z"/></svg>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Capacete</div>
+          <div class="prod-name">LS2 Rapid Fast Fibra</div>
+          <div class="prod-price-row">
+            <div><span class="prod-price-from">a partir de</span><span class="prod-price">R$ 389 <small>-15%</small></span></div>
+            <div class="prod-cart">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a class="prod-card reveal" href="https://wa.me/5511947943074?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Jaqueta%20Imperme%C3%A1vel%20X-Road%20(R%24%20259).%20Ainda%20tem%20em%20estoque%3F" target="_blank" rel="noopener">
+        <div class="prod-media">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8l4-4h8l4 4-3 3v9H7v-9z"/></svg>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Jaqueta</div>
+          <div class="prod-name">Jaqueta Impermeável X-Road</div>
+          <div class="prod-price-row">
+            <div><span class="prod-price-from">a partir de</span><span class="prod-price">R$ 259</span></div>
+            <div class="prod-cart">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a class="prod-card reveal" href="https://wa.me/5511947943074?text=Ol%C3%A1!%20Tenho%20interesse%20no%20Suporte%20Celular%20Antivibra%C3%A7%C3%A3o%20(R%24%2069).%20Ainda%20tem%20em%20estoque%3F" target="_blank" rel="noopener">
+        <div class="prod-media"><span class="prod-tag">Novo</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 18h6"/></svg>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Acessório</div>
+          <div class="prod-name">Suporte Celular Antivibração</div>
+          <div class="prod-price-row">
+            <div><span class="prod-price-from">a partir de</span><span class="prod-price">R$ 69</span></div>
+            <div class="prod-cart">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a class="prod-card reveal" href="https://wa.me/5511947943074?text=Ol%C3%A1!%20Tenho%20interesse%20no%20%C3%93leo%20Sint%C3%A9tico%2010W40%201L%20(R%24%2049).%20Ainda%20tem%20em%20estoque%3F" target="_blank" rel="noopener">
+        <div class="prod-media">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 3h8l1 4H7l1-4zM7 7h10l1 12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L7 7z"/></svg>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Óleo</div>
+          <div class="prod-name">Óleo Sintético 10W40 1L</div>
+          <div class="prod-price-row">
+            <div><span class="prod-price-from">a partir de</span><span class="prod-price">R$ 49</span></div>
+            <div class="prod-cart">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<svg class="tread" viewBox="0 0 400 14" preserveAspectRatio="none"><path d="M0 0 L14 14 L28 0 L42 14 L56 0 L70 14 L84 0 L98 14 L112 0 L126 14 L140 0 L154 14 L168 0 L182 14 L196 0 L210 14 L224 0 L238 14 L252 0 L266 14 L280 0 L294 14 L308 0 L322 14 L336 0 L350 14 L364 0 L378 14 L392 0 L400 6 L400 14 L0 14 Z"/></svg>
+
+<section id="oficina" class="oficina-sec">
+  <div class="wrap">
+    <div class="oficina-grid">
+      <div>
+        <div class="eyebrow reveal">Oficina Parças</div>
+        <h2 class="sec-title reveal">Da entrada até<br>a saída, sem enrolação</h2>
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-num">01</div>
+            <div><div class="step-title">Você agenda</div><div class="step-desc">Chama no WhatsApp e marca o melhor horário, sem fila.</div></div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">02</div>
+            <div><div class="step-title">A gente diagnostica</div><div class="step-desc">Avaliação completa antes de qualquer serviço, com orçamento claro.</div></div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">03</div>
+            <div><div class="step-title">Executa o serviço</div><div class="step-desc">Mecânico especializado, peça de procedência, sem gambiarra.</div></div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">04</div>
+            <div><div class="step-title">Você retira</div><div class="step-desc">Moto testada e revisada, pronta pra rodar com segurança.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="eyebrow">Serviços</div>
+        <h3 style="font-family:var(--body);font-size:20px;font-weight:700;margin:14px 0 22px;text-transform:none;">O que a oficina resolve</h3>
+        <div class="service-list">
+          <div class="service-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Revisão completa</div>
+          <div class="service-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/></svg>Troca de óleo</div>
+          <div class="service-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>Diagnóstico elétrico</div>
+          <div class="service-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>Troca de pneus</div>
+          <div class="service-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/></svg>Manutenção preventiva</div>
+          <div class="service-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 1.4 0l1.6-1.6a1 1 0 0 0 0-1.4l-1.6-1.6a1 1 0 0 0-1.4 0L13.1 3.3a1 1 0 0 0 0 1.4z"/></svg>Personalização</div>
+        </div>
+        <a class="btn btn-primary" style="margin-top:30px;" href="https://wa.me/5511947943074" target="_blank" rel="noopener">Agendar minha moto</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-band">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="reveal"><div class="stat-num">300+</div><div class="stat-label">Produtos ativos</div></div>
+      <div class="reveal"><div class="stat-num">2.9K</div><div class="stat-label">Seguidores no Instagram</div></div>
+      <div class="reveal"><div class="stat-num">4</div><div class="stat-label">Marketplaces conectados</div></div>
+      <div class="reveal"><div class="stat-num">7 dias</div><div class="stat-label">Atendimento por semana</div></div>
+    </div>
+  </div>
+</div>
+
+<section class="social-sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">Comunidade</div>
+        <h2 class="sec-title">Quem já roda<br>com os Parças</h2>
+      </div>
+    </div>
+    <div class="ig-card reveal">
+      <div class="ig-avatar">P</div>
+      <div>
+        <div class="ig-name">Parças Motos</div>
+        <div class="ig-handle">@parcasmotos</div>
+        <div class="ig-stats"><span><b>31</b> posts</span><span><b>2.965</b> seguidores</span><span><b>388</b> seguindo</span></div>
+      </div>
+      <a class="btn btn-outline ig-cta" href="https://www.instagram.com/parcasmotos/" target="_blank" rel="noopener">Ver Instagram</a>
+    </div>
+  </div>
+</section>
+
+<section id="localizacao" style="background:var(--asphalt-2);">
+  <div class="wrap">
+    <div class="loc-grid">
+      <div class="reveal">
+        <div class="eyebrow">Onde estamos</div>
+        <h2 class="sec-title">Vem na loja</h2>
+        <div class="loc-list">
+          <div class="loc-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.4-7-11a7 7 0 0 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <div><b>Endereço</b><span>Rua Euclides Pagani Martins, 196/226 — Taboão da Serra, SP</span></div>
+          </div>
+          <div class="loc-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <div><b>Horário de atendimento</b><span>Seg–Sex 8h–19h · Sáb 8h–17h · Dom 8h–14h</span></div>
+          </div>
+          <div class="loc-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5c0 8 8 16 16 16l3-5-6-2-2 2c-3-1-5-3-6-6l2-2-2-6z"/></svg>
+            <div><b>Contato</b><span>(11) 94794-3074 </span></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <a class="map-wrap" href="https://www.google.com/maps/search/?api=1&query=Rua+Euclides+Pagani+Martins+196%2C+Tabo%C3%A3o+da+Serra+-+SP" target="_blank" rel="noopener" aria-label="Abrir localização no Google Maps">
+          <iframe src="https://www.google.com/maps?q=Rua+Euclides+Pagani+Martins+196%2C+Tabo%C3%A3o+da+Serra+-+SP&output=embed" loading="lazy" title="Mapa - Parças Motos"></iframe>
+          <div class="map-overlay">
+            <span class="map-open-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.4-7-11a7 7 0 0 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              Abrir no Google Maps
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap">
+    <div class="eyebrow reveal" style="justify-content:center;">É pra já</div>
+    <h2 class="reveal">A loja aberta 24h,<br>a oficina de portas abertas</h2>
+    <p class="reveal">Site integrado ao Bling, vendendo em todos os marketplaces ao mesmo tempo — e agendamento de oficina sem sair do WhatsApp.</p>
+    <div class="hero-actions reveal">
+      <a class="btn btn-primary" href="https://wa.me/5511947943074" target="_blank" rel="noopener">Falar com os Parças</a>
+      <a class="btn btn-outline" href="#produtos">Ver produtos</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <div class="brand-mark">P</div>
+          <div class="brand-name">PARÇAS<span>MOTOS</span></div>
+        </div>
+        <p>Loja e oficina de motos em Taboão da Serra. Peças, acessórios, vestuário e manutenção — tudo num só lugar.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Loja</h4>
+        <a href="#categorias">Capacetes</a>
+        <a href="#categorias">Jaquetas</a>
+        <a href="#categorias">Acessórios</a>
+        <a href="#produtos">Ofertas</a>
+      </div>
+      <div class="foot-col">
+        <h4>Oficina</h4>
+        <a href="#oficina">Revisão</a>
+        <a href="#oficina">Troca de óleo</a>
+        <a href="#oficina">Manutenção</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contato</h4>
+        <a href="https://wa.me/5511947943074" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.instagram.com/parcasmotos/" target="_blank" rel="noopener">Instagram</a>
+        <a href="#localizacao">Endereço</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Parças Motos — Todos os direitos reservados</span>
+      <span>Taboão da Serra · SP</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/5511947943074" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.28-1.38c1.44.79 3.06 1.2 4.71 1.2h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.83 14.16c-.24.68-1.42 1.3-1.96 1.38-.5.08-1.13.11-1.83-.11-.42-.14-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.17-.3.37-.43.5-.14.14-.29.29-.13.57.17.29.75 1.24 1.6 2.01 1.1.98 2.03 1.29 2.32 1.43.29.14.46.12.63-.07.17-.19.72-.84.92-1.13.19-.29.38-.24.64-.14.26.1 1.65.78 1.94.92.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+</a>
+
+<script>
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  // hero split reacts to mouse
+  const heroSplit = document.getElementById('heroSplit');
+  const loja = heroSplit.querySelector('.split-loja');
+  const oficina = heroSplit.querySelector('.split-oficina');
+  document.querySelector('.hero').addEventListener('mousemove', (e)=>{
+    const pct = e.clientX / window.innerWidth;
+    const lojaBasis = 40 + pct*20;
+    loja.style.flex = `1 1 ${lojaBasis}%`;
+    oficina.style.flex = `1 1 ${100-lojaBasis}%`;
+  });
+  document.querySelector('.hero').addEventListener('mouseleave', ()=>{
+    loja.style.flex = '1 1 50%';
+    oficina.style.flex = '1 1 50%';
+  });
+</script>
+</body>
+</html>
