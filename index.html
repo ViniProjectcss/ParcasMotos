@@ -101,6 +101,8 @@
     content:'';position:absolute;left:50%;top:0;bottom:0;width:6px;
     background:repeating-linear-gradient(180deg, var(--yellow) 0 22px, var(--asphalt) 22px 44px);
     transform:translateX(-50%) skewX(-8deg);z-index:1;
+    mask-image:linear-gradient(to bottom, black 0%, black 9%, rgba(0,0,0,.16) 17%, rgba(0,0,0,.16) 79%, black 87%, black 100%);
+    -webkit-mask-image:linear-gradient(to bottom, black 0%, black 9%, rgba(0,0,0,.16) 17%, rgba(0,0,0,.16) 79%, black 87%, black 100%);
   }
   .hero-tag{
     position:absolute;top:130px;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
